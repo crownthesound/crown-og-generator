@@ -1,6 +1,8 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
+export const runtime = 'edge';
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -38,11 +40,11 @@ export async function GET(request: NextRequest) {
       return new Response('Contest not found', { status: 404 });
     }
 
-    console.log('Contest data:', contest);
-    const title = contest.name ? contest.name.toUpperCase() : 'CROWN';
-    const subtitle = contest.name2 || 'MUSIC COMPETITION';
-    const coverImage = contest.cover_image;
-    console.log('Title:', title, 'Subtitle:', subtitle, 'Image:', coverImage);
+    // Hardcode for testing
+    const title = 'MY FAVORITE THINGS';
+    const subtitle = 'JULIE ANDREWS';
+    const coverImage = 'https://mhflahfkeqxsolneaoxy.supabase.co/storage/v1/object/public/leaderboard-images/cover-images/ggcq3ro1exe.jpg';
+    console.log('Using hardcoded data - Title:', title, 'Subtitle:', subtitle, 'Image:', coverImage);
 
     return new ImageResponse(
       (
