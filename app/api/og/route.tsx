@@ -169,7 +169,7 @@ export async function GET(request: NextRequest) {
               {/* Enter button */}
               <div
                 style={{
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
                   background: '#4ade80',
                   color: '#000',
@@ -177,7 +177,6 @@ export async function GET(request: NextRequest) {
                   borderRadius: '60px',
                   fontSize: '22px',
                   fontWeight: 800,
-                  width: 'fit-content',
                   gap: '12px',
                   letterSpacing: '0.5px',
                 }}
