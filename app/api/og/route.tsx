@@ -202,7 +202,6 @@ export async function GET(request: NextRequest) {
                     height: '100%',
                     objectFit: 'cover',
                   }}
-                  alt={title}
                 />
                 {/* Subtle gradient overlay */}
                 <div
