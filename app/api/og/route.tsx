@@ -53,54 +53,10 @@ export async function GET(request: NextRequest) {
             width: '100%',
             height: '100%',
             display: 'flex',
-            background: '#000',
+            background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
             position: 'relative',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
           }}
         >
-          {/* Background gradient */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
-            }}
-          />
-          
-          {/* Decorative circles - pump.fun style */}
-          <svg
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <circle
-              cx="-50"
-              cy="-50"
-              r="200"
-              stroke="rgba(74, 222, 128, 0.15)"
-              strokeWidth="2"
-              fill="none"
-            />
-            <circle
-              cx="1250"
-              cy="300"
-              r="250"
-              stroke="rgba(74, 222, 128, 0.15)"
-              strokeWidth="2"
-              fill="none"
-            />
-            <circle
-              cx="200"
-              cy="680"
-              r="150"
-              stroke="rgba(74, 222, 128, 0.1)"
-              strokeWidth="2"
-              fill="none"
-            />
-          </svg>
           
           {/* Main content */}
           <div
@@ -181,10 +137,7 @@ export async function GET(request: NextRequest) {
                   letterSpacing: '0.5px',
                 }}
               >
-                <span>ENTER</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="black" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <span>ENTER →</span>
               </div>
             </div>
             
