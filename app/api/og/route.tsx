@@ -17,12 +17,11 @@ export async function GET(request: NextRequest) {
     const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZmxhaGZrZXF4c29sbmVhb3h5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MDg0NjIsImV4cCI6MjA1OTQ4NDQ2Mn0.TKLy609teZ2sZ5spCvKx8W9tsir5uXLXd-c9epe0znA';
     
     const response = await fetch(
-      `${supabaseUrl}/rest/v1/contests?id=eq.${contestId}`,
+      `${supabaseUrl}/rest/v1/contests?id=eq.${contestId}&select=*`,
       {
         headers: {
           'apikey': supabaseAnonKey,
-          'Authorization': `Bearer ${supabaseAnonKey}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${supabaseAnonKey}`
         }
       }
     );
