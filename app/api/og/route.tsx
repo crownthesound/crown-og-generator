@@ -41,9 +41,11 @@ export async function GET(request: NextRequest) {
       return new Response('Contest not found', { status: 404 });
     }
 
+    console.log('Contest data:', contest);
     const title = contest.name ? contest.name.toUpperCase() : 'CROWN';
     const subtitle = contest.name2 || 'MUSIC COMPETITION';
     const coverImage = contest.cover_image;
+    console.log('Title:', title, 'Subtitle:', subtitle, 'Image:', coverImage);
 
     return new ImageResponse(
       (
