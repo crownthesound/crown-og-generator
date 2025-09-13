@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch contest data from Supabase
     const supabaseUrl = 'https://mhflahfkeqxsolneaoxy.supabase.co';
-    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZmxhaGZrZXF4c29sbmVhb3h5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQxODc4NzUsImV4cCI6MjAzOTc2Mzg3NX0.8fK0sGLgqPrdqDw0Y5zzyLKqPMJVzqYJHtJlHmMfKKs';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZmxhaGZrZXF4c29sbmVhb3h5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MDg0NjIsImV4cCI6MjA1OTQ4NDQ2Mn0.TKLy609teZ2sZ5spCvKx8W9tsir5uXLXd-c9epe0znA';
     
     const response = await fetch(
       `${supabaseUrl}/rest/v1/contests?id=eq.${contestId}`,
