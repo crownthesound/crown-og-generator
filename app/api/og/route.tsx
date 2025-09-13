@@ -21,15 +21,23 @@ export async function GET(request: NextRequest) {
       {
         headers: {
           'apikey': supabaseAnonKey,
-          'Authorization': `Bearer ${supabaseAnonKey}`
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Content-Type': 'application/json'
         }
       }
     );
     
+    if (!response.ok) {
+      console.error('Supabase error:', response.status, response.statusText);
+      return new Response(`Database error: ${response.status}`, { status: 500 });
+    }
+    
     const contests = await response.json();
+    console.log('Fetched contests:', contests);
     const contest = contests[0];
     
     if (!contest) {
+      console.log('No contest found for ID:', contestId);
       return new Response('Contest not found', { status: 404 });
     }
 
