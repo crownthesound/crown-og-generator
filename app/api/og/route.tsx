@@ -195,8 +195,10 @@ export async function GET(request: NextRequest) {
                   boxShadow: '0 25px 80px rgba(0, 0, 0, 0.8)',
                 }}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={coverImage}
+                  alt=""
                   style={{
                     width: '100%',
                     height: '100%',
