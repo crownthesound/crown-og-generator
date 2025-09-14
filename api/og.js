@@ -76,9 +76,13 @@ export default async function handler(request) {
       }
     }
 
-    // Add cache-busting headers
+    // Add cache-busting headers with unique ETag for each contest
     const headers = {
-      'Cache-Control': 'public, max-age=300, s-maxage=300, stale-while-revalidate=60',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'X-Contest-ID': id,
+      'ETag': `"${id}-${Date.now()}"`,
     };
 
     return new ImageResponse(
