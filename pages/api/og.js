@@ -4,6 +4,8 @@ export const config = {
   runtime: 'edge',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function handler(request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -45,7 +47,14 @@ export default async function handler(request) {
     const subtitle = contest.name2 || '';
     const coverImage = contest.cover_image;
 
-    console.log('Generating image for contest:', title, subtitle, 'Image:', coverImage ? 'Yes' : 'No');
+    console.log('Request for contest ID:', id);
+    console.log('Contest data:', JSON.stringify({
+      id: contest.id,
+      name: contest.name,
+      name2: contest.name2,
+      cover_image: contest.cover_image ? contest.cover_image.substring(0, 50) + '...' : 'None'
+    }));
+    console.log('Generating image - Title:', title, 'Subtitle:', subtitle);
     
     return new ImageResponse(
       (
