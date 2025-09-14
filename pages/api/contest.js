@@ -45,20 +45,8 @@ export default async function handler(request) {
     const subtitle = contest.name2 || '';
     const coverImage = contest.cover_image;
 
-    // Fetch and convert image to base64
-    let imageData = null;
-    if (coverImage) {
-      try {
-        const imageResponse = await fetch(coverImage);
-        const arrayBuffer = await imageResponse.arrayBuffer();
-        const base64 = Buffer.from(arrayBuffer).toString('base64');
-        const mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
-        imageData = `data:${mimeType};base64,${base64}`;
-      } catch (error) {
-        console.error('Failed to fetch cover image:', error);
-      }
-    }
-
+    console.log('Generating image for contest:', title, subtitle, 'Image:', coverImage ? 'Yes' : 'No');
+    
     return new ImageResponse(
       (
         <div
@@ -73,15 +61,15 @@ export default async function handler(request) {
             position: 'relative',
           }}
         >
-          {imageData ? (
-            <img
-              src={imageData}
+          {coverImage ? (
+            <div
               style={{
                 position: 'absolute',
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center',
+                backgroundImage: `url(${coverImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             />
           ) : (
@@ -184,6 +172,9 @@ export default async function handler(request) {
     );
   } catch (error) {
     console.error('OG Image error:', error);
-    return new Response('Failed to generate image', { status: 500 });
+    return new Response(`Error: ${error.message}`, { 
+      status: 500,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 }
