@@ -112,85 +112,108 @@ export default async function handler(request) {
             />
           )}
           
+          {/* Dark overlay for depth */}
           <div
             style={{
               position: 'absolute',
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)',
+              background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)',
             }}
           />
           
+          {/* Logo in top left */}
           <div style={{
             position: 'absolute',
-            top: 60,
-            left: 60,
+            top: 40,
+            left: 40,
             display: 'flex',
             alignItems: 'center',
-            gap: 12,
+            gap: 8,
           }}>
+            <div style={{
+              width: 50,
+              height: 50,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 24,
+              fontWeight: 900,
+              color: 'white',
+            }}>C</div>
             <span style={{ 
-              fontSize: 24, 
+              fontSize: 20, 
               fontWeight: 700,
               color: 'white',
+              letterSpacing: -0.5,
             }}>{brand}</span>
-            <span style={{
-              fontSize: 14,
-              background: 'rgba(255,255,255,0.2)',
-              padding: '4px 12px',
-              borderRadius: 6,
-              color: 'white',
-              fontWeight: 600,
-            }}>CONTEST</span>
           </div>
 
+          {/* Main content with glassmorphism card */}
           <div style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            padding: '0 80px',
-            zIndex: 1,
+            alignItems: 'flex-start',
+            position: 'absolute',
+            bottom: 80,
+            left: 60,
+            right: 60,
+            background: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: 24,
+            padding: '48px',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
           }}>
+            {/* Artist name */}
             {subtitle && (
               <p style={{
-                fontSize: 32,
-                color: 'rgba(255,255,255,0.9)',
-                margin: '0 0 20px 0',
-                fontWeight: 600,
-                letterSpacing: 2,
+                fontSize: 18,
+                color: 'rgba(255,255,255,0.8)',
+                margin: '0 0 8px 0',
+                fontWeight: 500,
+                letterSpacing: 3,
                 textTransform: 'uppercase',
               }}>{subtitle}</p>
             )}
             
+            {/* Song title */}
             <h1 style={{
-              fontSize: 96,
+              fontSize: 72,
               fontWeight: 900,
-              margin: 0,
+              margin: '0 0 24px 0',
               letterSpacing: -2,
               textTransform: 'uppercase',
               color: 'white',
-              textShadow: '0 4px 12px rgba(0,0,0,0.3)',
-              WebkitTextStroke: '2px white',
-              paintOrder: 'stroke fill',
+              textShadow: '0 4px 20px rgba(0,0,0,0.5)',
+              lineHeight: 1,
             }}>{title}</h1>
-          </div>
 
-          <div style={{
-            position: 'absolute',
-            bottom: 60,
-            display: 'flex',
-            background: 'white',
-            color: '#764ba2',
-            padding: '20px 48px',
-            borderRadius: 16,
-            fontSize: 24,
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: 1,
-            boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-          }}>
-            ENTER CONTEST →
+            {/* Contest badge and CTA */}
+            <div style={{
+              display: 'flex',
+              gap: 16,
+              alignItems: 'center',
+            }}>
+              <span style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                padding: '12px 24px',
+                borderRadius: 100,
+                fontSize: 16,
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+              }}>🏆 Live Contest</span>
+              
+              <span style={{
+                color: 'rgba(255,255,255,0.9)',
+                fontSize: 16,
+                fontWeight: 600,
+              }}>Join now to compete →</span>
+            </div>
           </div>
         </div>
       ),
