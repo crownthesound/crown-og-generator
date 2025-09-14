@@ -6,9 +6,15 @@ export const config = {
 
 export default async function handler(request) {
   try {
-    const { searchParams, hostname } = new URL(request.url);
+    const url = new URL(request.url);
+    const { searchParams, hostname } = url;
     const id = searchParams.get('id');
     const brandParam = searchParams.get('brand');
+    
+    // Log the incoming request
+    console.log('Request URL:', request.url);
+    console.log('Contest ID from params:', id);
+    console.log('All search params:', Object.fromEntries(searchParams));
     
     // Determine brand based on domain or parameter
     let brand = 'CrownTheSound.com';
@@ -48,10 +54,13 @@ export default async function handler(request) {
     const coverImage = contest.cover_image;
     
     // Debug logging
-    console.log('Contest ID:', id);
-    console.log('Contest Title:', title);
-    console.log('Contest Subtitle:', subtitle);
-    console.log('Cover Image URL:', coverImage);
+    console.log('Processing contest:', {
+      id: id,
+      title: title,
+      subtitle: subtitle,
+      coverImage: coverImage,
+      contestData: contest
+    });
 
     // Fetch the image if it exists
     let imageData = null;
