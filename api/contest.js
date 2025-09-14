@@ -6,29 +6,18 @@ export const config = {
 
 export default async function handler(request) {
   try {
-    // Get contest ID from the URL path
-    const url = new URL(request.url);
-    const pathParts = url.pathname.split('/');
-    const id = pathParts[pathParts.length - 1]; // Get the last part of the path as ID
-    
-    // Get brand from query params if provided
-    const { searchParams, hostname } = url;
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
     const brandParam = searchParams.get('brand');
-    
-    // Log the incoming request
-    console.log('Request URL:', request.url);
-    console.log('Contest ID from path:', id);
-    
-    // Determine brand based on domain or parameter
-    let brand = 'CrownTheSound.com';
-    if (brandParam === 'sing' || hostname?.includes('sing.win')) {
-      brand = 'Sing.Win';
-    } else if (brandParam === 'crown' || hostname?.includes('crownthesound')) {
-      brand = 'CrownTheSound.com';
-    }
     
     if (!id) {
       return new Response('Contest ID is required', { status: 400 });
+    }
+    
+    // Determine brand
+    let brand = 'CrownTheSound.com';
+    if (brandParam === 'sing') {
+      brand = 'Sing.Win';
     }
 
     // Fetch contest data from Supabase
@@ -45,11 +34,6 @@ export default async function handler(request) {
       }
     );
     
-    if (!response.ok) {
-      console.error('Supabase error:', response.status, response.statusText);
-      return new Response(`Database error: ${response.status}`, { status: 500 });
-    }
-    
     const contests = await response.json();
     const contest = contests[0];
     
@@ -60,16 +44,8 @@ export default async function handler(request) {
     const title = (contest.name || 'CONTEST').toUpperCase();
     const subtitle = contest.name2 || '';
     const coverImage = contest.cover_image;
-    
-    // Debug logging
-    console.log('Processing contest:', {
-      id: id,
-      title: title,
-      subtitle: subtitle,
-      coverImage: coverImage ? 'Has image' : 'No image'
-    });
 
-    // Fetch the image if it exists
+    // Fetch and convert image to base64
     let imageData = null;
     if (coverImage) {
       try {
@@ -97,7 +73,6 @@ export default async function handler(request) {
             position: 'relative',
           }}
         >
-          {/* Background Image or Gradient */}
           {imageData ? (
             <img
               src={imageData}
@@ -120,7 +95,6 @@ export default async function handler(request) {
             />
           )}
           
-          {/* Dark overlay for better text readability */}
           <div
             style={{
               position: 'absolute',
@@ -130,7 +104,6 @@ export default async function handler(request) {
             }}
           />
           
-          {/* Brand */}
           <div style={{
             position: 'absolute',
             top: 60,
@@ -154,7 +127,6 @@ export default async function handler(request) {
             }}>CONTEST</span>
           </div>
 
-          {/* Main Content */}
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -187,7 +159,6 @@ export default async function handler(request) {
             }}>{title}</h1>
           </div>
 
-          {/* CTA Button */}
           <div style={{
             position: 'absolute',
             bottom: 60,
