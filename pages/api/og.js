@@ -85,7 +85,8 @@ export default async function handler(request) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: 'Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, sans-serif',
+            fontWeight: 900,
             position: 'relative',
           }}
         >
@@ -112,87 +113,54 @@ export default async function handler(request) {
             />
           )}
           
-          {/* Dark overlay */}
+          {/* Darker overlay extending up from bottom */}
           <div
             style={{
               position: 'absolute',
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%)',
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.8) 80%, rgba(0,0,0,0.98) 100%)',
             }}
           />
           
-          {/* Brand and Contest badge */}
+
+          {/* Song info left-aligned at bottom */}
           <div style={{
             position: 'absolute',
-            top: 60,
+            bottom: 60,
             left: 60,
             display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-          }}>
-            <span style={{ 
-              fontSize: 24, 
-              fontWeight: 700,
-              color: 'white',
-            }}>{brand}</span>
-            <span style={{
-              fontSize: 14,
-              background: '#22c55e',
-              padding: '4px 12px',
-              borderRadius: 6,
-              color: 'white',
-              fontWeight: 600,
-            }}>Contest</span>
-          </div>
-
-          {/* Song info centered */}
-          <div style={{
-            display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            padding: '0 80px',
+            alignItems: 'flex-start',
             zIndex: 1,
           }}>
+            {/* Artist name - smaller */}
             {subtitle && (
               <p style={{
-                fontSize: 32,
-                color: 'rgba(255,255,255,0.9)',
-                margin: '0 0 20px 0',
-                fontWeight: 600,
-                letterSpacing: 2,
+                fontSize: 36,
+                color: 'rgba(255,255,255,0.8)',
+                margin: '0 0 10px 0',
+                paddingLeft: '7px',
+                fontFamily: 'Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, sans-serif',
+                fontWeight: 'bold',
+                letterSpacing: 8,
                 textTransform: 'uppercase',
               }}>{subtitle}</p>
             )}
             
+            {/* Song title - much larger and bolder */}
             <h1 style={{
-              fontSize: 96,
-              fontWeight: 900,
+              fontSize: 110,
+              fontFamily: 'Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, sans-serif',
+              fontWeight: 'bold',
               margin: 0,
               letterSpacing: -2,
               textTransform: 'uppercase',
               color: 'white',
-              textShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              lineHeight: 0.85,
+              maxWidth: '1100px',
+              textShadow: '0 6px 30px rgba(0,0,0,0.9)',
             }}>{title}</h1>
-          </div>
-
-          {/* CTA Button */}
-          <div style={{
-            position: 'absolute',
-            bottom: 60,
-            display: 'flex',
-            background: 'white',
-            color: '#764ba2',
-            padding: '20px 48px',
-            borderRadius: 16,
-            fontSize: 24,
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: 1,
-            boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-          }}>
-            ENTER CONTEST →
           </div>
         </div>
       ),
