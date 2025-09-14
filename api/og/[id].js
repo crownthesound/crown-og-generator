@@ -4,13 +4,15 @@ export const config = {
   runtime: 'edge',
 };
 
-export default async function handler(request, { params }) {
+export default async function handler(request) {
   try {
     // Get contest ID from the URL path
-    const id = params.id;
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.length - 1]; // Get the last part of the path as ID
     
     // Get brand from query params if provided
-    const { searchParams, hostname } = new URL(request.url);
+    const { searchParams, hostname } = url;
     const brandParam = searchParams.get('brand');
     
     // Log the incoming request
