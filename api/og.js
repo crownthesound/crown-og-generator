@@ -6,8 +6,17 @@ export const config = {
 
 export default async function handler(request) {
   try {
-    const { searchParams } = new URL(request.url);
+    const { searchParams, hostname } = new URL(request.url);
     const id = searchParams.get('id');
+    const brandParam = searchParams.get('brand');
+    
+    // Determine brand based on domain or parameter
+    let brand = 'CrownTheSound.com';
+    if (brandParam === 'sing' || hostname?.includes('sing.win')) {
+      brand = 'Sing.Win';
+    } else if (brandParam === 'crown' || hostname?.includes('crownthesound')) {
+      brand = 'CrownTheSound.com';
+    }
     
     if (!id) {
       return new Response('Contest ID is required', { status: 400 });
@@ -36,12 +45,12 @@ export default async function handler(request) {
 
     const title = (contest.name || 'CONTEST').toUpperCase();
     const subtitle = contest.name2 || '';
+    const coverImage = contest.cover_image;
 
     return new ImageResponse(
       (
         <div
           style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             width: '100%',
             height: '100%',
             display: 'flex',
@@ -49,8 +58,41 @@ export default async function handler(request) {
             alignItems: 'center',
             justifyContent: 'center',
             fontFamily: 'Inter, sans-serif',
+            position: 'relative',
           }}
         >
+          {/* Background Image or Gradient */}
+          {coverImage ? (
+            <img
+              src={coverImage}
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              }}
+            />
+          )}
+          
+          {/* Dark overlay for better text readability */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)',
+            }}
+          />
           {/* Brand */}
           <div style={{
             position: 'absolute',
@@ -64,7 +106,7 @@ export default async function handler(request) {
               fontSize: 24, 
               fontWeight: 700,
               color: 'white',
-            }}>CrownTheSound.com</span>
+            }}>{brand}</span>
             <span style={{
               fontSize: 14,
               background: 'rgba(255,255,255,0.2)',
