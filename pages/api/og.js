@@ -50,12 +50,27 @@ export default async function handler(request) {
     const subtitle = contest.name2 || '';
     const coverImage = contest.cover_image;
 
+    // Fetch and convert cover image to base64
+    let imageData = null;
+    if (coverImage) {
+      try {
+        const imageResponse = await fetch(coverImage);
+        const arrayBuffer = await imageResponse.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        const mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+        imageData = `data:${mimeType};base64,${base64}`;
+        console.log('Successfully fetched cover image for contest:', id);
+      } catch (error) {
+        console.error('Failed to fetch cover image:', error);
+      }
+    }
+
     console.log('Request for contest ID:', id);
     console.log('Contest data:', JSON.stringify({
       id: contest.id,
       name: contest.name,
       name2: contest.name2,
-      cover_image: contest.cover_image ? contest.cover_image.substring(0, 50) + '...' : 'None'
+      cover_image: contest.cover_image ? 'Has image' : 'None'
     }));
     console.log('Generating image - Title:', title, 'Subtitle:', subtitle);
     
@@ -74,17 +89,28 @@ export default async function handler(request) {
             position: 'relative',
           }}
         >
-          {/* Background - gradient for now, images need base64 */}
-          <div
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              background: coverImage 
-                ? 'linear-gradient(135deg, #1e3a8a 0%, #581c87 100%)'
-                : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            }}
-          />
+          {/* Background Image or Gradient */}
+          {imageData ? (
+            <img
+              src={imageData}
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              }}
+            />
+          )}
           
           <div
             style={{
