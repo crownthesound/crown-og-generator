@@ -47,6 +47,25 @@ export default async function handler(request) {
     const subtitle = contest.name2 || '';
     const coverImage = contest.cover_image;
 
+    // Fetch the image if it exists
+    let imageData = null;
+    if (coverImage) {
+      try {
+        const imageResponse = await fetch(coverImage);
+        const arrayBuffer = await imageResponse.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        const mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+        imageData = `data:${mimeType};base64,${base64}`;
+      } catch (error) {
+        console.error('Failed to fetch cover image:', error);
+      }
+    }
+
+    // Add cache-busting headers
+    const headers = {
+      'Cache-Control': 'public, max-age=300, s-maxage=300, stale-while-revalidate=60',
+    };
+
     return new ImageResponse(
       (
         <div
@@ -62,9 +81,9 @@ export default async function handler(request) {
           }}
         >
           {/* Background Image or Gradient */}
-          {coverImage ? (
+          {imageData ? (
             <img
-              src={coverImage}
+              src={imageData}
               style={{
                 position: 'absolute',
                 width: '100%',
@@ -171,6 +190,7 @@ export default async function handler(request) {
       {
         width: 1200,
         height: 630,
+        headers,
       }
     );
   } catch (error) {
