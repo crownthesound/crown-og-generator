@@ -1,10 +1,9 @@
-import { ImageResponse } from '@vercel/og';
-
 export const config = {
   runtime: 'edge',
 };
 
 export default async function handler(request) {
+  const { ImageResponse } = await import('@vercel/og');
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
