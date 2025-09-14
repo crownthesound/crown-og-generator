@@ -74,27 +74,17 @@ export default async function handler(request) {
             position: 'relative',
           }}
         >
-          {coverImage ? (
-            <div
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                backgroundImage: `url(${coverImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-          ) : (
-            <div
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              }}
-            />
-          )}
+          {/* Background - gradient for now, images need base64 */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              background: coverImage 
+                ? 'linear-gradient(135deg, #1e3a8a 0%, #581c87 100%)'
+                : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            }}
+          />
           
           <div
             style={{
