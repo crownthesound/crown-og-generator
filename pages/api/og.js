@@ -89,115 +89,110 @@ export default async function handler(request) {
             position: 'relative',
           }}
         >
-          {/* Left side - Text on dark background */}
+          {/* Background Image */}
+          {imageData ? (
+            <img
+              src={imageData}
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              }}
+            />
+          )}
+          
+          {/* Dark overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%)',
+            }}
+          />
+          
+          {/* Brand and Contest badge */}
           <div style={{
             position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: '50%',
-            background: '#0a0a0a',
+            top: 60,
+            left: 60,
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            padding: '60px',
+            alignItems: 'center',
+            gap: 12,
           }}>
-            {/* Brand and Contest badge */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 16,
-            }}>
-              <span style={{ 
-                fontSize: 24, 
-                fontWeight: 700,
-                color: 'white',
-              }}>{brand}</span>
-              <span style={{
-                fontSize: 14,
-                background: '#22c55e',
-                padding: '4px 12px',
-                borderRadius: 6,
-                color: 'white',
-                fontWeight: 600,
-              }}>Contest</span>
-            </div>
-
-            {/* Song info */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 8,
-            }}>
-              {subtitle && (
-                <p style={{
-                  fontSize: 24,
-                  color: 'rgba(255,255,255,0.6)',
-                  margin: 0,
-                  fontWeight: 500,
-                  letterSpacing: 2,
-                  textTransform: 'uppercase',
-                }}>{subtitle}</p>
-              )}
-              
-              <h1 style={{
-                fontSize: 72,
-                fontWeight: 900,
-                margin: 0,
-                letterSpacing: -2,
-                textTransform: 'uppercase',
-                color: 'white',
-                lineHeight: 0.9,
-              }}>{title}</h1>
-            </div>
-
-            {/* CTA Button */}
-            <div style={{
-              display: 'flex',
-            }}>
-              <span style={{
-                background: 'white',
-                color: 'black',
-                padding: '20px 40px',
-                borderRadius: 12,
-                fontSize: 18,
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: 1,
-              }}>Enter Contest</span>
-            </div>
+            <span style={{ 
+              fontSize: 24, 
+              fontWeight: 700,
+              color: 'white',
+            }}>{brand}</span>
+            <span style={{
+              fontSize: 14,
+              background: '#22c55e',
+              padding: '4px 12px',
+              borderRadius: 6,
+              color: 'white',
+              fontWeight: 600,
+            }}>Contest</span>
           </div>
 
-          {/* Right side - Hero image */}
+          {/* Song info centered */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            padding: '0 80px',
+            zIndex: 1,
+          }}>
+            {subtitle && (
+              <p style={{
+                fontSize: 32,
+                color: 'rgba(255,255,255,0.9)',
+                margin: '0 0 20px 0',
+                fontWeight: 600,
+                letterSpacing: 2,
+                textTransform: 'uppercase',
+              }}>{subtitle}</p>
+            )}
+            
+            <h1 style={{
+              fontSize: 96,
+              fontWeight: 900,
+              margin: 0,
+              letterSpacing: -2,
+              textTransform: 'uppercase',
+              color: 'white',
+              textShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            }}>{title}</h1>
+          </div>
+
+          {/* CTA Button */}
           <div style={{
             position: 'absolute',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: '50%',
-            overflow: 'hidden',
-            borderRadius: '24px',
-            margin: '20px',
+            bottom: 60,
+            display: 'flex',
+            background: 'white',
+            color: '#764ba2',
+            padding: '20px 48px',
+            borderRadius: 16,
+            fontSize: 24,
+            fontWeight: 800,
+            textTransform: 'uppercase',
+            letterSpacing: 1,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
           }}>
-            {imageData ? (
-              <img
-                src={imageData}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                }}
-              />
-            )}
+            ENTER CONTEST →
           </div>
         </div>
       ),
