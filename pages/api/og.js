@@ -4,7 +4,10 @@ export const config = {
   runtime: 'edge',
 };
 
+// Force Vercel to never cache this endpoint
+export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function handler(request) {
   try {
@@ -26,7 +29,7 @@ export default async function handler(request) {
     const supabaseUrl = 'https://mhflahfkeqxsolneaoxy.supabase.co';
     const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZmxhaGZrZXF4c29sbmVhb3h5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MDg0NjIsImV4cCI6MjA1OTQ4NDQ2Mn0.TKLy609teZ2sZ5spCvKx8W9tsir5uXLXd-c9epe0znA';
     
-    const response = await fetch(
+    const supabaseResponse = await fetch(
       `${supabaseUrl}/rest/v1/contests?id=eq.${id}&select=*`,
       {
         headers: {
@@ -36,7 +39,7 @@ export default async function handler(request) {
       }
     );
     
-    const contests = await response.json();
+    const contests = await supabaseResponse.json();
     const contest = contests[0];
     
     if (!contest) {
@@ -56,7 +59,8 @@ export default async function handler(request) {
     }));
     console.log('Generating image - Title:', title, 'Subtitle:', subtitle);
     
-    return new ImageResponse(
+    // Create response with no-cache headers
+    const response = new ImageResponse(
       (
         <div
           style={{
@@ -179,6 +183,15 @@ export default async function handler(request) {
         height: 630,
       }
     );
+    
+    // Add headers to prevent caching
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    response.headers.set('Surrogate-Control', 'no-store');
+    response.headers.set('X-Contest-ID', id);
+    
+    return response;
   } catch (error) {
     console.error('OG Image error:', error);
     return new Response(`Error: ${error.message}`, { 
