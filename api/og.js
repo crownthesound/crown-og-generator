@@ -46,6 +46,12 @@ export default async function handler(request) {
     const title = (contest.name || 'CONTEST').toUpperCase();
     const subtitle = contest.name2 || '';
     const coverImage = contest.cover_image;
+    
+    // Debug logging
+    console.log('Contest ID:', id);
+    console.log('Contest Title:', title);
+    console.log('Contest Subtitle:', subtitle);
+    console.log('Cover Image URL:', coverImage);
 
     // Fetch the image if it exists
     let imageData = null;
